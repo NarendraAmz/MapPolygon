@@ -2,86 +2,92 @@
   "configVersion": 2,
   "packages": [
     {
-      "name": "collection",
-      "rootUri": "file:///Users/narendrabiswa/Documents/Narendra/Flutterdevelopment/flutter/.pub-cache/hosted/pub.dartlang.org/collection-1.14.12",
+      "name": "characters",
+      "rootUri": "file:///Users/Amzur/.pub-cache/hosted/pub.dartlang.org/characters-1.0.0",
       "packageUri": "lib/",
-      "languageVersion": "2.0"
+      "languageVersion": "2.6"
+    },
+    {
+      "name": "collection",
+      "rootUri": "file:///Users/Amzur/.pub-cache/hosted/pub.dartlang.org/collection-1.14.13",
+      "packageUri": "lib/",
+      "languageVersion": "2.3"
     },
     {
       "name": "flutter",
-      "rootUri": "file:///Users/narendrabiswa/Documents/Narendra/Flutterdevelopment/flutter/packages/flutter",
+      "rootUri": "file:///Users/Amzur/Downloads/flutter/packages/flutter",
       "packageUri": "lib/",
-      "languageVersion": "2.2"
+      "languageVersion": "2.9"
     },
     {
       "name": "flutter_plugin_android_lifecycle",
-      "rootUri": "file:///Users/narendrabiswa/Documents/Narendra/Flutterdevelopment/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-1.0.8",
+      "rootUri": "file:///Users/Amzur/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-1.0.8",
       "packageUri": "lib/",
       "languageVersion": "2.1"
     },
     {
       "name": "fluttertoast",
-      "rootUri": "file:///Users/narendrabiswa/Documents/Narendra/Flutterdevelopment/flutter/.pub-cache/hosted/pub.dartlang.org/fluttertoast-3.1.3",
+      "rootUri": "file:///Users/Amzur/.pub-cache/hosted/pub.dartlang.org/fluttertoast-3.1.3",
       "packageUri": "lib/",
       "languageVersion": "2.0"
     },
     {
       "name": "google_maps_flutter",
-      "rootUri": "file:///Users/narendrabiswa/Documents/Narendra/Flutterdevelopment/flutter/.pub-cache/hosted/pub.dartlang.org/google_maps_flutter-0.5.28+1",
+      "rootUri": "file:///Users/Amzur/.pub-cache/hosted/pub.dartlang.org/google_maps_flutter-0.5.28+1",
       "packageUri": "lib/",
       "languageVersion": "2.1"
     },
     {
       "name": "google_maps_flutter_platform_interface",
-      "rootUri": "file:///Users/narendrabiswa/Documents/Narendra/Flutterdevelopment/flutter/.pub-cache/hosted/pub.dartlang.org/google_maps_flutter_platform_interface-1.0.2",
+      "rootUri": "file:///Users/Amzur/.pub-cache/hosted/pub.dartlang.org/google_maps_flutter_platform_interface-1.0.2",
       "packageUri": "lib/",
       "languageVersion": "2.1"
     },
     {
       "name": "location",
-      "rootUri": "file:///Users/narendrabiswa/Documents/Narendra/Flutterdevelopment/flutter/.pub-cache/hosted/pub.dartlang.org/location-2.5.4",
+      "rootUri": "file:///Users/Amzur/.pub-cache/hosted/pub.dartlang.org/location-2.5.4",
       "packageUri": "lib/",
       "languageVersion": "2.0"
     },
     {
       "name": "meta",
-      "rootUri": "file:///Users/narendrabiswa/Documents/Narendra/Flutterdevelopment/flutter/.pub-cache/hosted/pub.dartlang.org/meta-1.1.8",
+      "rootUri": "file:///Users/Amzur/.pub-cache/hosted/pub.dartlang.org/meta-1.1.8",
       "packageUri": "lib/",
       "languageVersion": "1.12"
     },
     {
       "name": "page_transition",
-      "rootUri": "file:///Users/narendrabiswa/Documents/Narendra/Flutterdevelopment/flutter/.pub-cache/hosted/pub.dartlang.org/page_transition-1.1.6",
+      "rootUri": "file:///Users/Amzur/.pub-cache/hosted/pub.dartlang.org/page_transition-1.1.6",
       "packageUri": "lib/",
       "languageVersion": "2.3"
     },
     {
       "name": "plugin_platform_interface",
-      "rootUri": "file:///Users/narendrabiswa/Documents/Narendra/Flutterdevelopment/flutter/.pub-cache/hosted/pub.dartlang.org/plugin_platform_interface-1.0.2",
+      "rootUri": "file:///Users/Amzur/.pub-cache/hosted/pub.dartlang.org/plugin_platform_interface-1.0.2",
       "packageUri": "lib/",
       "languageVersion": "2.1"
     },
     {
       "name": "sky_engine",
-      "rootUri": "file:///Users/narendrabiswa/Documents/Narendra/Flutterdevelopment/flutter/bin/cache/pkg/sky_engine",
+      "rootUri": "file:///Users/Amzur/Downloads/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
       "languageVersion": "1.11"
     },
     {
       "name": "stream_transform",
-      "rootUri": "file:///Users/narendrabiswa/Documents/Narendra/Flutterdevelopment/flutter/.pub-cache/hosted/pub.dartlang.org/stream_transform-1.2.0",
+      "rootUri": "file:///Users/Amzur/.pub-cache/hosted/pub.dartlang.org/stream_transform-1.2.0",
       "packageUri": "lib/",
       "languageVersion": "2.6"
     },
     {
       "name": "typed_data",
-      "rootUri": "file:///Users/narendrabiswa/Documents/Narendra/Flutterdevelopment/flutter/.pub-cache/hosted/pub.dartlang.org/typed_data-1.1.6",
+      "rootUri": "file:///Users/Amzur/.pub-cache/hosted/pub.dartlang.org/typed_data-1.2.0",
       "packageUri": "lib/",
-      "languageVersion": "2.0"
+      "languageVersion": "2.4"
     },
     {
       "name": "vector_math",
-      "rootUri": "file:///Users/narendrabiswa/Documents/Narendra/Flutterdevelopment/flutter/.pub-cache/hosted/pub.dartlang.org/vector_math-2.0.8",
+      "rootUri": "file:///Users/Amzur/.pub-cache/hosted/pub.dartlang.org/vector_math-2.0.8",
       "packageUri": "lib/",
       "languageVersion": "2.0"
     },
@@ -91,7 +97,7 @@
       "packageUri": "lib/"
     }
   ],
-  "generated": "2020-07-31T07:36:19.364515Z",
+  "generated": "2020-08-05T08:38:05.329813Z",
   "generator": "pub",
-  "generatorVersion": "2.8.4"
+  "generatorVersion": "2.9.0-20.0.dev.flutter-f8ff12008e"
 }
