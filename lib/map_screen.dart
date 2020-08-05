@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'dart:math' as Math;
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:firebase_database/firebase_database.dart';
+
 class MapSample extends StatefulWidget {
   @override
   State<MapSample> createState() => MapSampleState();
@@ -19,8 +22,9 @@ class MapSampleState extends State<MapSample> {
   List<LatLng> polyPoints = [];
   Location myLocation;
   String dropdownValue = 'Select';
-
-  List <String> spinnerItems = ['Select',
+  final databaseReference = FirebaseDatabase.instance.reference();
+  List<String> spinnerItems = [
+    'Select',
     'Sq_Feet',
     'Sq_Yard',
     'Sq_Metre',
@@ -28,11 +32,11 @@ class MapSampleState extends State<MapSample> {
     'Sq_Mile',
     'Acres',
     'Cents',
-  ] ;
+  ];
   static final CameraPosition _position1 = CameraPosition(
       bearing: 192.833,
 //      target: LatLng(19.2215, 73.1645),
-      target: LatLng(17.812350,83.199170),
+      target: LatLng(17.812350, 83.199170),
       zoom: 12.0,
       tilt: 59.440);
   Future<void> _goToPosition1() async {
@@ -61,9 +65,16 @@ class MapSampleState extends State<MapSample> {
           : MapType.normal;
     });
   }
+
   _onTapMarkerAdd(LatLng latLng) {
     setState(() {
       polyPoints.add(latLng);
+      databaseReference
+          .reference()
+          .child('1')
+          .push()
+          .set({'lat': latLng.latitude, 'long': latLng.longitude})
+            ..catchError((error) => {print(error)});
       _drawPolygon(polyPoints);
       _markers.add(
         Marker(
@@ -107,42 +118,35 @@ class MapSampleState extends State<MapSample> {
     double squareMetre = calculatePolygonArea(polyPoints) * 4047;
     double squareKm = calculatePolygonArea(polyPoints) / 247;
     double squareMile = calculatePolygonArea(polyPoints) / 640;
-    double cents = calculatePolygonArea(polyPoints)*100;
+    double cents = calculatePolygonArea(polyPoints) * 100;
 
     if (data == "Sq_Feet") {
       toastArea("squre Feet", squareFeet);
-    }
-    else if (data == "Acres") {
-      toastArea("Acres",calculatePolygonArea(polyPoints));
-    }
-    else if (data == "Sq_Yard") {
+    } else if (data == "Acres") {
+      toastArea("Acres", calculatePolygonArea(polyPoints));
+    } else if (data == "Sq_Yard") {
       toastArea("Square Yard", squareYard);
-    }
-    else if (data == "Sq_Metre") {
+    } else if (data == "Sq_Metre") {
       toastArea("Square Metre ", squareMetre);
-    }
-    else if (data == "Sq_Km") {
+    } else if (data == "Sq_Km") {
       toastArea("Square Kilometre ", squareKm);
-    }
-    else if (data == "Sq_Mile") {
+    } else if (data == "Sq_Mile") {
       toastArea("Square Mile ", squareMile);
-    }
-    else if (data == "Cents") {
+    } else if (data == "Cents") {
       toastArea("Cents ", cents);
     }
   }
-  void toastArea(String name,double val){
+
+  void toastArea(String name, double val) {
     Fluttertoast.showToast(
-        msg: val.toString() +
-            name,
+        msg: val.toString() + name,
         toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
+        gravity: ToastGravity.BOTTOM,
         timeInSecForIos: 1,
         backgroundColor: Colors.red,
         textColor: Colors.white,
         fontSize: 16.0);
   }
-
 
   static double calculatePolygonArea(List coordinates) {
     double area = 0;
@@ -160,7 +164,7 @@ class MapSampleState extends State<MapSample> {
       area = area * 6378137 * 6378137 / 2;
     }
 
-    return area.abs() * 0.000247105;  //sq meters to Acres
+    return area.abs() * 0.000247105; //sq meters to Acres
   }
 
   static double convertToRadian(double input) {
@@ -173,21 +177,26 @@ class MapSampleState extends State<MapSample> {
       materialTapTargetSize: MaterialTapTargetSize.padded,
       backgroundColor: Colors.blue,
       child: Icon(icon, size: 36.0),
-      heroTag:icon.toString(),
-
+      heroTag: icon.toString(),
     );
+  }
+
+  Function getData() {
+    databaseReference.once().then((DataSnapshot snapshot) {
+      print('Data : ${snapshot.key}');
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    getData();
     return new Scaffold(
-      body:
-      Stack(
+      body: Stack(
         children: <Widget>[
           GoogleMap(
             onMapCreated: _onMapCreated,
-            initialCameraPosition:
-            CameraPosition(target: LatLng(17.812350, 83.199170), zoom: 11.0),
+            initialCameraPosition: CameraPosition(
+                target: LatLng(17.812350, 83.199170), zoom: 11.0),
             mapType: _currentMapType,
             markers: _markers,
             polygons: _polygons,
@@ -199,7 +208,6 @@ class MapSampleState extends State<MapSample> {
           ),
           Padding(
             padding: EdgeInsets.all(16.0),
-
             child: Align(
               alignment: Alignment.topRight,
               child: Column(
@@ -234,7 +242,8 @@ class MapSampleState extends State<MapSample> {
                       });
                       _calculateArea(data);
                     },
-                    items: spinnerItems.map<DropdownMenuItem<String>>((String value) {
+                    items: spinnerItems
+                        .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
@@ -244,7 +253,6 @@ class MapSampleState extends State<MapSample> {
                 ],
               ),
             ),
-
           )
         ],
       ),
