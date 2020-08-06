@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 import 'dart:math' as Math;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -17,12 +18,15 @@ class MapSampleState extends State<MapSample> {
   static const LatLng _center = const LatLng(45.521563, -122.677433);
   final Set<Marker> _markers = {};
   final Set<Polygon> _polygons = {};
+  List multiplePolygones = [];
   LatLng _lastMapPosition = _center;
   MapType _currentMapType = MapType.normal;
   List<LatLng> polyPoints = [];
   Location myLocation;
   String dropdownValue = 'Select';
+  bool start = true;
   final databaseReference = FirebaseDatabase.instance.reference();
+  //final count = databaseReference.reference().
   List<String> spinnerItems = [
     'Select',
     'Sq_Feet',
@@ -66,15 +70,15 @@ class MapSampleState extends State<MapSample> {
     });
   }
 
-  _onTapMarkerAdd(LatLng latLng) {
+  _onTapMarkerAdd(LatLng latLng, String from) {
     setState(() {
       polyPoints.add(latLng);
-      databaseReference
-          .reference()
-          .child('1')
-          .push()
-          .set({'lat': latLng.latitude, 'long': latLng.longitude})
-            ..catchError((error) => {print(error)});
+      from == "map"
+          ? databaseReference.reference().child('1').push().set({
+              'lat': latLng.latitude,
+              'long': latLng.longitude
+            }).catchError((error) => {print(error)})
+          : null;
       _drawPolygon(polyPoints);
       _markers.add(
         Marker(
@@ -97,6 +101,7 @@ class MapSampleState extends State<MapSample> {
       _markers.clear();
       _polygons.clear();
       polyPoints.clear();
+      databaseReference.child('1').remove();
     });
   }
 
@@ -107,6 +112,16 @@ class MapSampleState extends State<MapSample> {
           points: listLatLng,
           fillColor: Colors.transparent,
           strokeColor: Colors.red));
+      // multiplePolygones.forEach((element) {
+      //   print(element);
+      //   Set<Polygon> list = element;
+      //   Set<Polygon> list1;
+      //   list.map((e) => {list1.add(Polygon(
+      //     polygonId: PolygonId('123'),
+      //     points: listLatLng,
+      //     fillColor: Colors.transparent,
+      //     strokeColor: Colors.red))});
+      // });
     });
   }
 
@@ -181,15 +196,56 @@ class MapSampleState extends State<MapSample> {
     );
   }
 
+  @override
+  void initState() {
+    super.initState();
+    start ? getData() : start = false;
+    setState(() {
+      start:
+      false;
+    });
+  }
+
   Function getData() {
+    // databaseReference.child('1').remove();
     databaseReference.once().then((DataSnapshot snapshot) {
-      print('Data : ${snapshot.key}');
+      Map<dynamic, dynamic> list1 = snapshot.value[1];
+      print(list1);
+      list1.forEach((key, value) {
+        Map<dynamic, dynamic> list2 = value;
+        dynamic value1;
+        dynamic value2;
+        list2.forEach((key, value) {
+          if (key == "lat") {
+            value1 = value;
+          } else {
+            value2 = value;
+          }
+        });
+        LatLng list3 = LatLng(value1, value2);
+        _onTapMarkerAdd(list3, 'database');
+      });
+      print('Data : ${snapshot.value[1]}');
+    });
+  }
+
+  _addNewPolygon() {
+    multiplePolygones.add(_polygons);
+    // _polygons = {};
+    polyPoints = [];
+    setState(() {
+      multiplePolygones:
+      multiplePolygones.add(_polygons);
+      _polygons:
+      {}
+      ;
+      polyPoints:
+      [];
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    getData();
     return new Scaffold(
       body: Stack(
         children: <Widget>[
@@ -203,7 +259,7 @@ class MapSampleState extends State<MapSample> {
             onCameraMove: _onCameraMove,
             myLocationEnabled: true,
             onTap: (LatLng latLng) {
-              _onTapMarkerAdd(latLng);
+              _onTapMarkerAdd(latLng, 'map');
             },
           ),
           Padding(
@@ -217,6 +273,8 @@ class MapSampleState extends State<MapSample> {
                   button(_goToPosition1, Icons.location_searching),
                   SizedBox(height: 16.0),
                   button(_clearAllMarkers, Icons.location_off),
+                  //SizedBox(height: 16.0),
+                  //button(_addNewPolygon, Icons.add_circle),
 //                  SizedBox(height: 16.0),
 //                  button(_calculateArea, Icons.av_timer),
                   DropdownButton<String>(
